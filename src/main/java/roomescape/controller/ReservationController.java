@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import roomescape.dto.Reservation;
 import roomescape.exception.InvalidValueException;
 import roomescape.exception.NotFoundReservationException;
+import roomescape.repository.ReservationRepository;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -20,14 +21,11 @@ import java.util.concurrent.atomic.AtomicLong;
 @Controller
 public class ReservationController {
 
-    private List<Reservation> reservations = new ArrayList<>();
-    private AtomicLong index = new AtomicLong(1);
-// 이단계
-//    public ReservationController() {
-//        reservations.add(new Reservation(1L, "브라운1", "2023-01-01", "10:00"));
-//        reservations.add(new Reservation(2L, "브라운2", "2023-01-02", "11:00"));
-//        reservations.add(new Reservation(3L, "브라운3", "2023-01-03", "12:00"));
-//    }
+    private final ReservationRepository reservationRepository;
+
+    public ReservationController(ReservationRepository repository) {
+        this.reservationRepository = repository;
+    }
 
     // 홈화면
     @GetMapping("/reservation")
@@ -39,7 +37,7 @@ public class ReservationController {
     @ResponseBody
     @GetMapping("/reservations")
     public List<Reservation> list() {
-        return reservations;
+        return reservationRepository.findAll();
     }
 
     //예약 추가
@@ -52,8 +50,7 @@ public class ReservationController {
             throw new InvalidValueException("예약 추가에 필요한 인자값이 비어있습니다.");
         }
 
-        Reservation reservation = new Reservation(index.getAndIncrement(), newReservation.getName(), newReservation.getDate(), newReservation.getTime());
-        reservations.add(reservation);
+        Reservation reservation = reservationRepository.insert(newReservation);
 
         return ResponseEntity.created(URI.create("/reservations/" + reservation.getId()))
                 .body(reservation);
@@ -62,12 +59,10 @@ public class ReservationController {
     //예약 삭제
     @DeleteMapping("/reservations/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        Reservation reservation = reservations.stream()
-                .filter(it -> it.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new NotFoundReservationException("예약을 찾을 수 없습니다."));
+// 수정예정       Reservation reservation = reservationRepository.fin
+//                .orElseThrow(() -> new NotFoundReservationException("예약을 찾을 수 없습니다."));
 
-        reservations.remove(reservation);
+        reservationRepository.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
