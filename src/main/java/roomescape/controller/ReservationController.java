@@ -8,23 +8,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-import roomescape.dto.Reservation;
-import roomescape.exception.InvalidValueException;
-import roomescape.exception.NotFoundReservationException;
-import roomescape.repository.ReservationRepository;
+import roomescape.dto.ReservationRequestDto;
+import roomescape.dto.ReservationResponseDto;
+import roomescape.service.ReservationService;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Controller
 public class ReservationController {
 
-    private final ReservationRepository reservationRepository;
+    private final ReservationService reservationService;
 
-    public ReservationController(ReservationRepository repository) {
-        this.reservationRepository = repository;
+    public ReservationController(ReservationService reservationService) {
+        this.reservationService = reservationService;
     }
 
     // 홈화면
@@ -36,21 +33,17 @@ public class ReservationController {
     //예약 조회
     @ResponseBody
     @GetMapping("/reservations")
-    public List<Reservation> list() {
-        return reservationRepository.findAll();
+    public ResponseEntity<List<ReservationResponseDto>> list() {
+        List<ReservationResponseDto> reservations = reservationService.getAllReservations();
+        return ResponseEntity.ok(reservations);
     }
 
     //예약 추가
     @ResponseBody
     @PostMapping("/reservations")
-    public ResponseEntity<Reservation> create(@RequestBody Reservation newReservation) {
-        if (newReservation.getName() == null || newReservation.getName().isEmpty() ||
-                newReservation.getDate() == null || newReservation.getDate().isEmpty() ||
-                newReservation.getTime() == null || newReservation.getTime().isEmpty()) {
-            throw new InvalidValueException("예약 추가에 필요한 인자값이 비어있습니다.");
-        }
+    public ResponseEntity<ReservationResponseDto> create(@RequestBody ReservationRequestDto newReservationDto) {
 
-        Reservation reservation = reservationRepository.insert(newReservation);
+        ReservationResponseDto reservation = reservationService.createReservation(newReservationDto);
 
         return ResponseEntity.created(URI.create("/reservations/" + reservation.getId()))
                 .body(reservation);
@@ -59,10 +52,7 @@ public class ReservationController {
     //예약 삭제
     @DeleteMapping("/reservations/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-// 수정예정       Reservation reservation = reservationRepository.fin
-//                .orElseThrow(() -> new NotFoundReservationException("예약을 찾을 수 없습니다."));
-
-        reservationRepository.delete(id);
+        reservationService.deleteReservation(id);
         return ResponseEntity.noContent().build();
     }
 }
