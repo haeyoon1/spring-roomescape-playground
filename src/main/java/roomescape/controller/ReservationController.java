@@ -27,7 +27,7 @@ public class ReservationController {
     // 홈화면
     @GetMapping("/reservation")
     public String reservationPage() {
-        return "reservation";
+        return "new-reservation";
     }
 
     //예약 조회

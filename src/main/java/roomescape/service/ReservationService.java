@@ -30,7 +30,7 @@ public class ReservationService {
         Reservation reservation = new Reservation(
                 requestDto.getName(),
                 requestDto.getDate(),
-                requestDto.getTime()
+                requestDto.getTimeAsTime()
         );
         Reservation savedReservation = reservationRepository.insert(reservation);
         return toResponseDto(savedReservation);
@@ -45,7 +45,7 @@ public class ReservationService {
                 reservation.getId(),
                 reservation.getName(),
                 reservation.getDate(),
-                reservation.getTime()
+                reservation.getTimeAsLocalTime()
         );
     }
 }

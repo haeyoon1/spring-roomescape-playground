@@ -1,13 +1,15 @@
 package roomescape.dto;
 
+import roomescape.entity.Time;
+
 import java.time.LocalDateTime;
 
 public class ReservationRequestDto {
     private String name;
     private String date;
-    private LocalDateTime time;
+    private String time;
 
-    public ReservationRequestDto(String name, String date, LocalDateTime time) {
+    public ReservationRequestDto(String name, String date, String time) {
         this.name = name;
         this.date = date;
         this.time = time;
@@ -21,7 +23,11 @@ public class ReservationRequestDto {
         return date;
     }
 
-    public LocalDateTime getTime() {
+    public String getTime() {
         return time;
+    }
+
+    public Time getTimeAsTime(){ //string -> time
+        return new Time(time);
     }
 }
