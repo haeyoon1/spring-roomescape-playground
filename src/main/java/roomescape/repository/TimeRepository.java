@@ -7,23 +7,23 @@ import roomescape.entity.Time;
 import java.util.List;
 
 @Repository
-public class TimeRespository {
+public class TimeRepository {
 
     private final TimeDao timeDao;
 
-    public TimeRespository(TimeDao timeDao) {
+    public TimeRepository(TimeDao timeDao) {
         this.timeDao = timeDao;
     }
 
-    public List<Time> findTime() {
+    public List<Time> findAll() {
         return timeDao.findAll();
     }
 
-    public Time insertTime(Time time) {
+    public Time save(Time time) {
         return timeDao.insert(time);
     }
 
-    public void deleteTime(Long id) {
+    public void deleteById(Long id) {
         timeDao.delete(id);
     }
 }

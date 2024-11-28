@@ -1,15 +1,24 @@
 package roomescape.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class TimeRequestDto {
-    public LocalDateTime time;
+    private String time;
 
-    public TimeRequestDto(LocalDateTime time) {
+    public TimeRequestDto() {}
+
+    public TimeRequestDto(String time) {
         this.time = time;
     }
 
-    public LocalDateTime getTime() {
+    public String getTime() {
         return time;
+    }
+
+    public LocalTime toLocalTime() { //string -> localTime
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        return LocalTime.parse(time, formatter);
     }
 }
