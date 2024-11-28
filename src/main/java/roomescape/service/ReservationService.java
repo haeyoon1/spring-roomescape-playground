@@ -6,6 +6,8 @@ import roomescape.dto.ReservationRequestDto;
 import roomescape.dto.ReservationResponseDto;
 import roomescape.entity.Reservation;
 import roomescape.entity.Time;
+import roomescape.repository.ReservationRepository;
+import roomescape.repository.TimeRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,32 +15,40 @@ import java.util.stream.Collectors;
 @Service
 public class ReservationService {
 
-    private final ReservationDao reservationDao;
+    private final ReservationRepository reservationRepository;
 
-    public ReservationService(ReservationDao reservationDao) {
-        this.reservationDao = reservationDao;
+    public ReservationService(ReservationRepository reservationRepository) {
+        this.reservationRepository = reservationRepository;
     }
 
-    public List<ReservationResponseDto> getAllReservations() {
-        List<Reservation> reservations = reservationDao.findAll();
-        return reservations.stream()
-                .map(reservation -> new ReservationResponseDto(
-                        reservation.getId(),
-                        reservation.getName(),
-                        reservation.getDate(),
-                        reservation.getTimeAsLocalTime()))
+    public List<ReservationResponseDto> getAllReservations(){
+        return reservationRepository.findAll()
+                .stream()
+                .map(this::toResponseDto)
                 .collect(Collectors.toList());
     }
 
-    public ReservationResponseDto createReservation(ReservationRequestDto newReservationDto) {
-        Time time = newReservationDto.getTimeAsTime();
-        Reservation reservation = new Reservation(newReservationDto.getName(), newReservationDto.getDate(), time);
-        reservation = reservationDao.insert(reservation);
+    public ReservationResponseDto createReservation(ReservationRequestDto requestDto){
 
-        return new ReservationResponseDto(reservation.getId(), reservation.getName(), reservation.getDate(), reservation.getTime().getTimeASALocalTime());
+        Reservation reservation = new Reservation(
+                requestDto.getName(),
+                requestDto.getDate(),
+                requestDto.getStringTimeAsTime()
+        );
+        Reservation savedReservation = reservationRepository.insert(reservation);
+        return toResponseDto(savedReservation);
     }
 
-    public void deleteReservation(Long id) {
-        reservationDao.delete(id);
+    public void deleteReservation(Long id){
+        reservationRepository.delete(id);
+    }
+
+    private ReservationResponseDto toResponseDto(Reservation reservation) {
+        return new ReservationResponseDto(
+                reservation.getId(),
+                reservation.getName(),
+                reservation.getDate(),
+                reservation.getTime().getTimeASALocalTime()
+        );
     }
 }

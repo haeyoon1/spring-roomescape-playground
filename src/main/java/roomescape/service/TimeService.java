@@ -22,7 +22,9 @@ public class TimeService {
     public List<TimeResponseDto> findAllTimes() {
         return timeRespository.findAll()
                 .stream()
-                .map(time -> new TimeResponseDto(time.getId(), time.getTimeASALocalTime()))
+                .map(time -> new TimeResponseDto(
+                        time.getId(),
+                        time.getTimeASALocalTime()))
                 .collect(Collectors.toList());
     }
 

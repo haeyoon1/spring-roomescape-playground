@@ -2,8 +2,6 @@ package roomescape.dto;
 
 import roomescape.entity.Time;
 
-import java.time.LocalDateTime;
-
 public class ReservationRequestDto {
     private String name;
     private String date;
@@ -27,7 +25,7 @@ public class ReservationRequestDto {
         return time;
     }
 
-    public Time getTimeAsTime(){ //string -> time
+    public Time getStringTimeAsTime(){ //string -> time
         return new Time(time);
     }
 }
