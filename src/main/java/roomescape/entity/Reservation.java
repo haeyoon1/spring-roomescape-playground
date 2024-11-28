@@ -1,6 +1,5 @@
 package roomescape.entity;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Reservation {
@@ -36,7 +35,7 @@ public class Reservation {
         return time;
     }
 
-    public LocalTime getTimeAsLocalTime(){
+    public LocalTime getTimeAsLocalTime() {
         return time.getTimeASALocalTime();
     }
 }

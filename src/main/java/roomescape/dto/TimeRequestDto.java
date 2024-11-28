@@ -2,7 +2,6 @@ package roomescape.dto;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 public class TimeRequestDto {
     private String time;
