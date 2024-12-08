@@ -1,7 +1,5 @@
 package roomescape.dto;
 
-import roomescape.entity.Time;
-
 public class ReservationRequestDto {
     private String name;
     private String date;
@@ -25,7 +23,4 @@ public class ReservationRequestDto {
         return time;
     }
 
-    public Time getStringTimeAsTime(){ //string -> time
-        return new Time(time);
-    }
 }

@@ -36,13 +36,14 @@ public class ReservationDao {
 
 
     public Reservation insert(Reservation reservation) {
-        String sql = "INSERT INTO reservation(name, date, time) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO reservation(name, date, time_id) VALUES (?, ?, ?)";
+
         jdbcTemplate.update(sql, reservation.getName(), reservation.getDate(), reservation.getTime().getId());
 
         String query = "SELECT id FROM reservation ORDER BY id DESC LIMIT 1";
         Long id = jdbcTemplate.queryForObject(query, Long.class);
-
-        return new Reservation(id, reservation.getName(), reservation.getDate(), reservation.getTime());
+//
+        return new Reservation(id, reservation.getName(), reservation.getDate(), reservation.getTime().getTime());
     }
 
     public void delete(Long id) {

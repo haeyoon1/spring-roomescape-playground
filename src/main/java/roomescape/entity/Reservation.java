@@ -14,6 +14,12 @@ public class Reservation {
         this.date = date;
         this.time = time;
     }
+    public Reservation(Long id, String name, String date, String time) {
+        this.id = id;
+        this.name = name;
+        this.date = date;
+        this.time = new Time(time);
+    }
 
     public Reservation(String name, String date, Time time) {
         this(null, name, date, time);
@@ -36,6 +42,7 @@ public class Reservation {
     }
 
     public LocalTime getTimeAsLocalTime() {
-        return time.getTimeASALocalTime();
+        return time.getTimeASLocalTime();
     }
+
 }
