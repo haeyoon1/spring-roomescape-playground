@@ -25,7 +25,16 @@ public class ReservationRequestDto {
         return time;
     }
 
-    public Time getStringTimeAsTime(){ //string -> time
+    public Time toTime(){ //string -> time
         return new Time(time);
+    }
+
+    @Override
+    public String toString() {
+        return "ReservationRequestDto{" +
+                "name='" + name + '\'' +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                '}';
     }
 }

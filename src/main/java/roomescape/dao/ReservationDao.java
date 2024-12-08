@@ -36,7 +36,8 @@ public class ReservationDao {
 
 
     public Reservation insert(Reservation reservation) {
-        String sql = "INSERT INTO reservation(name, date, time) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO reservation(name, date, time_id) VALUES (?, ?, ?)";
+        System.out.println("!?!?!?!?!?!final reservation time: " + reservation.getTime().getId() + reservation.getTime());
         jdbcTemplate.update(sql, reservation.getName(), reservation.getDate(), reservation.getTime().getId());
 
         String query = "SELECT id FROM reservation ORDER BY id DESC LIMIT 1";

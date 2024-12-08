@@ -12,7 +12,7 @@ public class Time {
     }
 
     public Time(String time) {
-        this(null, time);
+        this.time = time;
     }
 
     public Long getId() {
@@ -23,7 +23,15 @@ public class Time {
         return time;
     }
 
-    public LocalTime getTimeASALocalTime(){ //string->LocalTime
+    public LocalTime getTimeASLocalTime(){ //string -> localtime
         return LocalTime.parse(time);
+    }
+
+    @Override
+    public String toString() {
+        return "Time{" +
+                "id=" + id +
+                ", time='" + time + '\'' +
+                '}';
     }
 }

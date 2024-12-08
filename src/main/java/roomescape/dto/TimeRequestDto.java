@@ -16,8 +16,4 @@ public class TimeRequestDto {
         return time;
     }
 
-    public LocalTime toLocalTime() { //string -> localTime
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        return LocalTime.parse(time, formatter);
-    }
 }

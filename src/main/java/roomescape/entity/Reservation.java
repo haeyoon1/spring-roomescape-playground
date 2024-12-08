@@ -36,6 +36,16 @@ public class Reservation {
     }
 
     public LocalTime getTimeAsLocalTime() {
-        return time.getTimeASALocalTime();
+        return time.getTimeASLocalTime();
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", date='" + date + '\'' +
+                ", time=" + time +
+                '}';
     }
 }

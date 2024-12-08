@@ -24,7 +24,7 @@ public class TimeService {
                 .stream()
                 .map(time -> new TimeResponseDto(
                         time.getId(),
-                        time.getTimeASALocalTime()))
+                        time.getTimeASLocalTime()))
                 .collect(Collectors.toList());
     }
 
@@ -32,7 +32,10 @@ public class TimeService {
         Time time = new Time(requestDto.getTime());
         Time newTime = timeRespository.save(time);
 
-        return toResponseDTO(newTime.getId(), newTime.getTimeASALocalTime());
+        //System.out.println("print newtimeid" + time.getId());
+        //System.out.println("print newtimetime" + time.getTimeASLocalTime());
+
+        return toResponseDTO(newTime.getId(), newTime.getTimeASLocalTime());
     }
 
     private TimeResponseDto toResponseDTO(Long id, LocalTime time) {

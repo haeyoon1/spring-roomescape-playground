@@ -1,7 +1,5 @@
 package roomescape.repository;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import roomescape.dao.ReservationDao;
 import roomescape.entity.Reservation;
@@ -22,7 +20,7 @@ public class ReservationRepository {
     }
 
     //예약 추가
-    public Reservation insert(Reservation reservation) {
+    public Reservation save(Reservation reservation) {
         return reservationDao.insert(reservation);
     }
 
