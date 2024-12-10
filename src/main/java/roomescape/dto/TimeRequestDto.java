@@ -1,8 +1,5 @@
 package roomescape.dto;
 
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-
 public class TimeRequestDto {
     private String time;
 

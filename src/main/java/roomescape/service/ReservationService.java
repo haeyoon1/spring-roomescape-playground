@@ -9,8 +9,6 @@ import roomescape.repository.ReservationRepository;
 import roomescape.repository.TimeRepository;
 
 import java.time.DateTimeException;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,7 +43,6 @@ public class ReservationService {
                 time
         );
         Reservation newReservation = reservationRepository.save(reservation);
-        System.out.println("new Reservation" + newReservation.toString());
 
         return toResponseDto(newReservation);
     }
@@ -63,18 +60,10 @@ public class ReservationService {
         );
     }
 
-//    private void validateTimeFormat (String time) {
-//        try {
-//            LocalTime.parse(time);
-//        } catch (DateTimeException e){
-//            throw new IllegalArgumentException("Invalid time format.");
-//        }
-//    }
-
     private Long parseTimeId(String time) {  // String -> long
         try {
             return Long.parseLong(time);
-        } catch (NumberFormatException e) {
+        } catch (DateTimeException e) {
             throw new IllegalArgumentException("Invalid time id format: " + time);
         }
     }

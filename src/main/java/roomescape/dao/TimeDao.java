@@ -1,9 +1,13 @@
 package roomescape.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import roomescape.entity.Time;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -24,10 +28,15 @@ public class TimeDao {
 
     public Time insert(Time time) {
         String sql = "INSERT INTO time(time) VALUES (?)";
-        jdbcTemplate.update(sql, time.getTime());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
 
-        String query = "SELECT id FROM time ORDER BY id DESC LIMIT 1";
-        Long id = jdbcTemplate.queryForObject(query, Long.class);
+        jdbcTemplate.update(connection -> {
+                    PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                    ps.setString(1, time.getTime());
+                    return ps;
+                }, keyHolder);
+
+        Long id = keyHolder.getKey().longValue();
 
         return new Time(id, time.getTime());
     }

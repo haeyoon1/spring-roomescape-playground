@@ -8,7 +8,6 @@ import roomescape.repository.TimeRepository;
 
 import java.time.LocalTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TimeService {
@@ -24,15 +23,15 @@ public class TimeService {
                 .stream()
                 .map(time -> new TimeResponseDto(
                         time.getId(),
-                        time.getTimeASLocalTime()))
-                .collect(Collectors.toList());
+                        time.getTimeAsLocalTime()))
+                .toList();
     }
 
     public TimeResponseDto createTime(TimeRequestDto requestDto) {
         Time time = new Time(requestDto.getTime());
         Time newTime = timeRespository.save(time);
 
-        return toResponseDTO(newTime.getId(), newTime.getTimeASLocalTime());
+        return toResponseDTO(newTime.getId(), newTime.getTimeAsLocalTime());
     }
 
     private TimeResponseDto toResponseDTO(Long id, LocalTime time) {

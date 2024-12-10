@@ -57,13 +57,13 @@ function renderReservations(data) {
 }
 
 function insertReservationRow(row, reservation) {
-  ['id', 'name', 'date'].forEach((field, index) => {
+  ['id', 'name', 'date', 'time'].forEach((field, index) => {
     row.insertCell(index).textContent = reservation[field];
   });
 
-  row.insertCell(3).textContent = reservation.time.time;
+  row.insertCell(4).textContent = reservation.time.time;
 
-  const actionCell = row.insertCell(4);
+  const actionCell = row.insertCell(5);
   actionCell.appendChild(createActionButton('삭제', 'btn-danger', deleteRow));
 }
 

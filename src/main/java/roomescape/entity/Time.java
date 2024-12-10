@@ -1,5 +1,6 @@
 package roomescape.entity;
 
+import java.time.DateTimeException;
 import java.time.LocalTime;
 
 public class Time {
@@ -23,8 +24,11 @@ public class Time {
         return time;
     }
 
-    public LocalTime getTimeASLocalTime(){ //string -> localtime
-        return LocalTime.parse(time);
+    public LocalTime getTimeAsLocalTime(){ //string -> localtime
+        try {
+            return LocalTime.parse(time);
+        } catch (DateTimeException e) {
+        return LocalTime.parse(time + ":00"); // 초
+        }
     }
-
 }

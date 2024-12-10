@@ -42,7 +42,7 @@ public class Reservation {
     }
 
     public LocalTime getTimeAsLocalTime() {
-        return time.getTimeASLocalTime();
+        return time.getTimeAsLocalTime();
     }
 
 }
